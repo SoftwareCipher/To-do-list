@@ -19,11 +19,12 @@ public class Service implements ServiceImpl {
 
     @Override
     public List<Task> getAllTasks() {
-        return null;
+        return repServiceTack.findAll();
     }
 
     @Override
     public boolean newTask(Task t) {
+        repServiceTack.save(t);
         return true;
     }
 
@@ -34,7 +35,7 @@ public class Service implements ServiceImpl {
 
     @Override
     public void deleteTask(Long id) {
-
+        repServiceTack.deleteById(id);
     }
 
     @Override
