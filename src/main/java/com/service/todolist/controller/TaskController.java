@@ -3,9 +3,12 @@ package com.service.todolist.controller;
 import com.service.todolist.dao.entities.Task;
 import com.service.todolist.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class TaskController {
@@ -26,8 +29,15 @@ public class TaskController {
     }
 
     @PostMapping("/update/{id}")
-    void updateTask(@PathVariable Long id, @RequestBody Task t){
-        service.updateTask(id, t);
+    ResponseEntity<Object> updateTask(@PathVariable Long id, @RequestBody Task t){
+        boolean isTaskExist = service.isTaskExist(id);
+        if(isTaskExist){
+            t.setId(id);
+            service.updateTask(t);
+            return new ResponseEntity<>("Task is updated", HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Task isn't updated", HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/delete/{id}")

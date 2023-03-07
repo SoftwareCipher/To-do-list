@@ -29,7 +29,7 @@ public class Service implements ServiceImpl {
     }
 
     @Override
-    public void updateTask(Long id, Task t) {
+    public void updateTask(Task t) {
 
     }
 
@@ -51,5 +51,10 @@ public class Service implements ServiceImpl {
     @Override
     public void incompleteTask(Long id, boolean state) {
 
+    }
+
+    @Override
+    public boolean isTaskExist(Long id) {
+        return repServiceTack.existsById(id);
     }
 }
